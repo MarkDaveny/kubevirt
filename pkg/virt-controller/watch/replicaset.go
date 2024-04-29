@@ -354,7 +354,7 @@ func (c *VMIReplicaSet) filterFinishedVMIs(vmis []*virtv1.VirtualMachineInstance
 	})
 }
 
-// filterUnknownVMIs takes a list of VMIs and returns all VMIs which are in an unknown and not yet terminating stage
+// filterUnkownVMIs takes a list of VMIs and returns all VMIs which are in an unknown and not yet terminating stage
 func (c *VMIReplicaSet) filterUnkownVMIs(vmis []*virtv1.VirtualMachineInstance) []*virtv1.VirtualMachineInstance {
 	return filter(vmis, func(vmi *virtv1.VirtualMachineInstance) bool {
 		return !vmi.IsFinal() && vmi.DeletionTimestamp == nil &&

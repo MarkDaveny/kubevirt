@@ -1825,7 +1825,7 @@ const magicUUID = "6a1a24a1-4061-4607-8bf4-a3963d0c5895"
 
 var firmwareUUIDns = uuid.MustParse(magicUUID)
 
-// setStableUUID makes sure the VirtualMachineInstance being started has a 'stable' UUID.
+// setupStableFirmwareUUID makes sure the VirtualMachineInstance being started has a 'stable' UUID.
 // The UUID is 'stable' if doesn't change across reboots.
 func setupStableFirmwareUUID(vm *virtv1.VirtualMachine, vmi *virtv1.VirtualMachineInstance) {
 
@@ -2511,7 +2511,7 @@ func (c *VMController) isVirtualMachineStatusStopped(vm *virtv1.VirtualMachine, 
 	return !c.isVMIStartExpected(vm)
 }
 
-// isVirtualMachineStatusStopped determines whether the VM status field should be set to "Provisioning".
+// isVirtualMachineStatusProvisioning determines whether the VM status field should be set to "Provisioning".
 func (c *VMController) isVirtualMachineStatusProvisioning(vm *virtv1.VirtualMachine, vmi *virtv1.VirtualMachineInstance) bool {
 	return storagetypes.HasDataVolumeProvisioning(vm.Namespace, vm.Spec.Template.Spec.Volumes, c.dataVolumeStore)
 }
@@ -2558,7 +2558,7 @@ func (c *VMController) isVirtualMachineStatusPaused(vm *virtv1.VirtualMachine, v
 	return vmi.IsRunning() && hasPausedCondition
 }
 
-// isVirtualMachineStatusPaused determines whether the VM status field should be set to "Stopping".
+// isVirtualMachineStatusStopping determines whether the VM status field should be set to "Stopping".
 func (c *VMController) isVirtualMachineStatusStopping(vm *virtv1.VirtualMachine, vmi *virtv1.VirtualMachineInstance) bool {
 	return vmi != nil && !vmi.IsFinal() &&
 		(vmi.IsMarkedForDeletion() || c.isVMIStopExpected(vm))
